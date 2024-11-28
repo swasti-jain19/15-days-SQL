@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>DAY 9-Solutions</title>
+</head>
+
+<body>
+	<p>Here are the solutions. Be aware that there can be multiple correct solutions and ways of solving the challanges.</p>
+	<p>If your solution is different this doesn't mean that your solution is not correct.</p>
+	<p>You should just find the correct answers.</p>
+	<p><br></p><p><strong>Solution 1 a: Creating the songs table with the default value for genre and constraints.</strong></p><pre class="prettyprint linenums">
+		CREATE TABLE songs (
+			song_name VARCHAR(255) NOT NULL,
+			genre VARCHAR(100) DEFAULT 'Not defined',
+			price DECIMAL(10, 2) CHECK (price >= 1.99) DEFAULT 1.99,
+			release_date DATE CHECK (release_date BETWEEN '1950-01-01' AND CURRENT_DATE),
+			CONSTRAINT date_check CHECK (release_date BETWEEN '1950-01-01' AND CURRENT_DATE)
+        );
+
+	</pre>
+		
+		<p><br></p><p><strong>Solution 1 b: Inserting a row into the table:</strong></p><pre class="prettyprint linenums">
+			INSERT INTO songs (song_name, genre, price, release_date)
+				VALUES ('Song A', 'Pop', 2.99, '2024-11-28');
+
+		</pre>
+		
+		<p><br></p><p><strong>Solution 1 c: Modifying the constraint to allow a price of 0.99:</strong></p><pre class="prettyprint linenums">
+			ALTER TABLE songs
+				DROP CONSTRAINT price_check;
+				
+			ALTER TABLE songs
+				ADD CONSTRAINT price_check CHECK (price >= 0.99);
+		</pre>
+
+		<p><br></p><p><strong>Solution 1 d: Insert a row again with a price of 0.99:</strong></p><pre class="prettyprint linenums">
+			INSERT INTO songs (song_name, genre, price, release_date)
+				VALUES ('Song B', 'Rock', 0.99, '2024-11-28');
+
+
+		</pre>
+		
+		<p><br></p><p><strong>TOPIC COVERED</strong></p><pre class="prettyprint linenums">
+			CREATE TABLE, DD commands(CREATE, ALTER, DROP), DM commands (INSERT, UPDATE, DELETE), constraints(coloumns- DEFAULT,UNIQUE, NOT NULL; Table - CHECK, PRIMARY KEY, FOREIGN KEY), Data types, ALTER cmds(DROP, ADD, TYPE, RENAME, TABLE constraints).
+			</pre>
+</body>
+</html>

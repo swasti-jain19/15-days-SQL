@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>DAY 2-Solutions</title>
+</head>
+
+<body>
+	<p>Here are the solutions. Be aware that there can be multiple correct solutions and ways of solving the challanges.</p><p>If your solution is different this doesn't mean that your solution is not correct.</p><p>You should just find the correct answers.</p>
+	
+	<p><br></p><p><strong>Solution 1:</strong></p><pre class="prettyprint linenums">
+		SELECT 
+		count(*) 
+		FROM PAYMENT 
+		WHERE customer_id = 100;</pre>
+		
+		<p><br></p><p><strong>Solution 2:</strong></p><pre class="prettyprint linenums">
+		SELECT 
+		count(*) 
+		FROM RENTAL 
+		WHERE return_date is null;
+		</pre>
+		
+		<p><br></p><p><strong>Solution 3:</strong></p><pre class="prettyprint linenums">
+		SELECT 
+		payment_id, 
+		amount 
+		FROM PAYMENT 
+		WHERE amount <= 2.00;
+		</pre>
+		
+		<p><br></p><p><strong>Solution 4:</strong></p><pre class="prettyprint linenums">
+		SELECT * 
+		FROM PAYMENT 
+		WHERE customer_id 
+		in (322, 346, 354) 
+		AND (amount <2.00 OR amount >10.00) 
+		ORDER BY customer_id ASC, 
+		amount DESC;</pre>
+		
+		<p><br></p><p><strong>Solution 5:</strong></p><pre class="prettyprint linenums">
+		SELECT * 
+		FROM PAYMENT 
+		WHERE customer_id 
+		in (12, 25, 67, 93, 124, 234) 
+		AND (amount IN (4.99, 7.99, 9.99)) 
+		AND payment_date 
+		BETWEEN '2020-01-01 0:00'AND '2020-01-31 24:00' ;</pre>
+		
+		<p><br></p><p><strong>Solution 6:</strong></p><pre class="prettyprint linenums">
+		SELECT * 
+		FROM PAYMENT 
+		WHERE (amount BETWEEN 1.99 AND 3.99) 
+		AND payment_date 
+		BETWEEN '2020-01-26 0:00'AND '2020-01-27 24:00';
+		</pre>
+		
+		<p><br></p><p><strong>Solution 7:</strong></p><pre class="prettyprint linenums">
+		SELECT 
+		count(*) 
+		FROM FILM 
+		WHERE description 
+		LIKE '%Documentary%';</pre>
+		
+		<p><br></p><p><strong>Solution 8:</strong></p><pre class="prettyprint linenums">
+		SELECT 
+		count(*) 
+		FROM CUSTOMER 
+		WHERE first_name 
+		LIKE '___' AND  
+		(last_name LIKE '%X' OR last_name LIKE '%Y');</pre>
+		
+		<p><br></p><p><strong>Solution 9:</strong></p><pre class="prettyprint linenums">
+		SELECT 
+		count(*) as no_of_movies 
+		FROM FILM 
+		WHERE description 
+		LIKE '%Saga%' 
+		AND (title LIKE 'A%' OR title LIKE '%R')
+		</pre>
+		
+		<p><br></p><p><strong>Solution 10:</strong></p><pre class="prettyprint linenums">
+		SELECT * 
+		FROM CUSTOMER 
+		WHERE first_name 
+		LIKE '%ER%' 
+		AND first_name LIKE '_A%' 
+		ORDER BY last_name desc;</pre>
+			 
+		<p><br></p><p><strong>Solution 11:</strong></p><pre class="prettyprint linenums">
+		SELECT 
+		COUNT(*) 
+		FROM PAYMENT 
+		WHERE (amount = 0 OR amount BETWEEN 3.99 AND 7.99 ) 
+		AND payment_date 
+		BETWEEN '2020-05-01' AND '2020-05-02';</pre>
+
+		<p><br></p><p><strong>TOPIC COVERED</strong></p><pre class="prettyprint linenums">
+		WHERE (with comp operators), WHERE + ORDER BY, DESC/ASC, NULL/NOT NULL, AND/OR(nest and or), BETWEEN…AND,  LIKE(_ , % ), Commenting(__ OR /*  */) and alising (AS)</pre>
+
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>DAY 10-Solutions</title>
+</head>
+
+<body>
+	<p>Here are the solutions. Be aware that there can be multiple correct solutions and ways of solving the challenges.</p>
+	<p>If your solution is different, this doesn't mean that your solution is not correct. You should just find the correct answers.</p>
+	<p><br></p>
+	
+	<p><strong>Solution 1:</strong></p>
+	<pre class="prettyprint linenums">
+	UPDATE film  
+	SET rental_rate=1.99  
+	WHERE rental_rate=0.99;
+
+	ALTER TABLE customer  
+	ADD COLUMN initials VARCHAR(4);
+
+	UPDATE customer  
+	SET initials=LEFT(first_name,1)||'.'||LEFT(last_name,1)||'.';
+	</pre>
+
+	<p><br></p><p><strong>Solution 2:</strong></p>
+	<pre class="prettyprint linenums">
+	-- Step 1: Create the table with constraints<br>
+	CREATE TABLE users (
+	    user_id SERIAL PRIMARY KEY,
+	    first_name VARCHAR(50),
+	    last_name VARCHAR(50),
+	    user_name VARCHAR(50) CONSTRAINT namelength CHECK (LENGTH(user_name) > 2),
+	    signup_date DATE DEFAULT CURRENT_DATE,
+	    birth_date DATE CONSTRAINT birth_check DEFAULT '1900-01-01' CHECK (birth_date > '1900-01-01')
+	);<br><br>
+
+	-- Step 4: Rename the constraint namelength to name_length<br>
+	ALTER TABLE users RENAME CONSTRAINT namelength TO name_length;<br><br>
+
+	-- Step 5: Try to add Frank Smith<br>
+	INSERT INTO users (first_name, last_name, user_name, birth_date)
+	VALUES ('Frank', 'Smith', 'franksmith1', '1905-12-02');<br><br>
+
+	-- Step 6: Modify the constraint on birthdate<br>
+	ALTER TABLE users DROP CONSTRAINT birth_check;<br><br>
+
+	ALTER TABLE users ADD CONSTRAINT birth_check CHECK (birth_date > '1900-01-01' AND birth_date <= '1910-01-01');<br><br>
+
+	-- Step 7: Try again to add Frank Smith<br>
+	INSERT INTO users (first_name, last_name, user_name, birth_date)
+	VALUES ('Frank', 'Smith', 'franksmith1', '1905-12-02');
+	</pre>
+
+	<p><br></p><p><strong>Solution 3:</strong></p>
+	<pre class="prettyprint linenums">
+		-- Step 1: Create the table with constraints<br>
+	CREATE TABLE songs (
+	    song_id SERIAL PRIMARY KEY,
+	    song_name VARCHAR(100) NOT NULL,
+	    genre VARCHAR(50) DEFAULT 'Not defined',
+	    price DECIMAL(10, 2) CONSTRAINT price_check CHECK (price >= 1.99),
+	    release_date DATE CONSTRAINT date_check CHECK (release_date BETWEEN '1950-01-01' AND CURRENT_DATE)
+	); <br><br>
+
+	-- Step 5: Try to add Frank Smith<br>
+	INSERT INTO songs (song_name, genre, price, release_date)
+	VALUES ('Song by Frank Smith', 'Jazz', 1.99, '1905-12-02');<br><br>
+
+	-- Step 6: Modify the constraint on release_date<br>
+	ALTER TABLE songs DROP CONSTRAINT date_check;<br><br>
+
+	ALTER TABLE songs ADD CONSTRAINT date_check CHECK (release_date BETWEEN '1950-01-01' AND '1910-01-01');<br><br>
+
+	-- Step 7: Try again to add Frank Smith<br>
+	INSERT INTO songs (song_name, genre, price, release_date)
+	VALUES ('Song by Frank Smith', 'Jazz', 1.99, '1905-12-02');
+	</pre>
+
+	<p><br></p><p><strong>Solution 4:</strong></p>
+	<pre class="prettyprint linenums">
+	CREATE VIEW films_category AS
+	SELECT 
+	    title,
+	    length,
+	    category_name
+	FROM 
+	    films
+	WHERE 
+	    category_name IN ('Action', 'Comedy')
+	ORDER BY 
+	    length DESC;
+	</pre>
+
+	<p><br></p><p><strong>Solution 5:</strong></p>
+	<pre class="prettyprint linenums">
+	ALTER VIEW v_customer_info
+	RENAME TO v_customer_information;
+
+	ALTER VIEW v_customer_information
+	RENAME COLUMN customer_id TO c_id;
+
+	CREATE OR REPLACE VIEW v_customer_information AS
+	SELECT cu.customer_id,
+	    cu.first_name || ' ' || cu.last_name AS name,
+	    cu.initials,
+	    a.address,
+	    a.postal_code,
+	    a.phone,
+	    city.city,
+	    country.country
+	FROM customer cu
+	JOIN address a ON cu.address_id = a.address_id
+	JOIN city ON a.city_id = city.city_id
+	JOIN country ON city.country_id = country.country_id
+	ORDER BY customer_id;
+	</pre>
+
+	<p><br></p><p><strong>Solution 6:</strong></p>
+	<pre class="prettyprint linenums">
+	UPDATE songs
+	SET genre='Pop music'
+	WHERE song_id=4;
+	</pre>
+
+	<p><br></p><p><strong>Solution 7:</strong></p>
+	<pre class="prettyprint linenums">
+	DELETE FROM songs 
+	WHERE song_id IN (3,4);
+	</pre>
+
+	<p><br></p><p><strong>Solution 8:</strong></p>
+	<pre class="prettyprint linenums">
+	CREATE TABLE customer_anonymous AS 
+	SELECT customer_id, initials 
+	FROM customer
+	WHERE first_name LIKE 'C%';
+	</pre>
+
+	<p><br></p><p><strong>Solution 9:</strong></p>
+	<pre class="prettyprint linenums">
+	ALTER VIEW customer_anonymous
+	RENAME TO v_customer_info;
+	</pre>
+
+	<p><br></p><p><strong>Solution 10:</strong></p>
+	<pre class="prettyprint linenums">
+	DROP MATERIALIZED VIEW customer_anonymous;
+	</pre>
+
+	<p><br></p><p><strong>TOPICS COVERED:</strong></p><pre class="prettyprint linenums">
+		UPDATE, ALTER TABLE, CREATE TABLE, INSERT, CHECK CONSTRAINTS, RENAME CONSTRAINT, CREATE VIEW, DROP CONSTRAINT, MATERIALIZED VIEW, DELETE, SELECT
+	</pre>
+
+</body>
+</html>

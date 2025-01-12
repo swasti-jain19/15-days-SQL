@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>DAY 3 - Solutions</title>
+</head>
+
+<body>
+
+	<p>Here are the solutions. Be aware that there can be multiple correct solutions and ways of solving the challenges.</p>
+	<p>If your solution is different, this doesn't mean that your solution is incorrect.</p>
+	<p>You should just find the correct answers.</p>
+
+	<p><br></p><p><strong>Solution 1:</strong></p><pre class="prettyprint linenums">
+		SELECT 
+		staff_id, 
+		sum(amount), 
+		count(*) 
+		FROM PAYMENT 
+		GROUP BY staff_id;
+	</pre>
+		
+	<p><br></p><p><strong>Solution 2:</strong></p><pre class="prettyprint linenums">
+		SELECT 
+		staff_id, 
+		sum(amount), 
+		count(*) 
+		FROM PAYMENT 
+		GROUP BY staff_id 
+		ORDER BY sum(amount);
+	</pre>
+		
+	<p><br></p><p><strong>Solution 3:</strong></p><pre class="prettyprint linenums">
+		SELECT 
+		staff_id, 
+		sum(amount), 
+		count(*) 
+		FROM PAYMENT 
+		WHERE amount != 0 
+		GROUP BY staff_id 
+		ORDER BY sum(amount);
+	</pre>
+		
+	<p><br></p><p><strong>Solution 4:</strong></p><pre class="prettyprint linenums">
+		SELECT 
+		DATE(payment_date) AS date, 
+		staff_id, 
+		sum(amount), 
+		count(*) 
+		FROM PAYMENT 
+		GROUP BY date, staff_id 
+		ORDER BY sum(amount) DESC;
+	</pre>
+
+	<p><br></p><p><strong>Solution 5:</strong></p><pre class="prettyprint linenums">
+		SELECT 
+		DATE(payment_date) AS date, 
+		staff_id, 
+		sum(amount), 
+		count(*) 
+		FROM PAYMENT 
+		GROUP BY date, staff_id 
+		ORDER BY sum(amount) DESC; 
+		(Version 2)
+	</pre>
+
+	<p><br></p><p><strong>Solution 6:</strong></p><pre class="prettyprint linenums">
+		SELECT 
+		MIN(replacement_cost), 
+		MAX(replacement_cost), 
+		ROUND(AVG(replacement_cost), 2) AS AVG, 
+		SUM(replacement_cost) 
+		FROM FILM;
+	</pre>
+
+	<p><br></p><p><strong>Solution 7:</strong></p><pre class="prettyprint linenums">
+		SELECT 
+		customer_id, 
+		DATE(payment_date), 
+		ROUND(AVG(amount), 2) AS avg_amount, 
+		count(*) 
+		FROM PAYMENT 
+		WHERE DATE(payment_date) IN ('2020-04-28', '2020-04-29', '2020-04-30') 
+		GROUP BY customer_id, DATE(payment_date) 
+		HAVING count(*) > 1 
+		ORDER BY avg_amount DESC;
+	</pre>
+
+	<p><br></p><p><strong>TOPIC COVERED</strong></p><pre class="prettyprint linenums">
+		AGGREGATE FUNCTIONS (SUM, AVG, MIN, MAX, COUNT, +GROUP BY ), >FROM>WHERE>GROUP BY>ORDER BY>HAVING(Aggregate fun)
+	</pre>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>DAY 6 - Solutions</title>
+</head>
+<body>
+
+	<p>Here are the solutions for Day 6. Remember, there can be multiple correct solutions or approaches to solving the challenges. If your solution differs, it may still be valid as long as it achieves the correct results.</p>
+
+	<p><strong>Solution 1:</strong></p>
+	<pre class="prettyprint linenums">
+	SELECT payment.*, first_name, last_name 
+	FROM payment
+	INNER JOIN customer 
+	ON payment.customer_id = customer.customer_id;
+	</pre>
+
+	<p><strong>Solution 2:</strong></p>
+	<pre class="prettyprint linenums">
+	SELECT fare_conditions, COUNT(*) 
+	FROM boarding_passes b
+	INNER JOIN seats s
+	ON s.seat_no = b.seat_no
+	GROUP BY fare_conditions;
+	</pre>
+
+	<p><strong>Solution 3:</strong></p>
+	<pre class="prettyprint linenums">
+	SELECT * 
+	FROM boarding_passes b
+	FULL OUTER JOIN tickets t  
+	ON b.ticket_no = t.ticket_no 
+	WHERE t.ticket_no IS NULL;
+	</pre>
+
+	<p><strong>Solution 4:</strong></p>
+	<pre class="prettyprint linenums">
+	SELECT * 
+	FROM aircrafts_data a 
+	LEFT JOIN flights f 
+	ON a.aircraft_code = f.aircraft_code 
+	WHERE f.flight_id IS NULL;
+	</pre>
+
+	<p><strong>Solution 5:</strong></p>
+	<pre class="prettyprint linenums">
+	SELECT s.seat_no, COUNT(*) 
+	FROM seats s
+	LEFT JOIN boarding_passes b
+	ON s.seat_no = b.seat_no 
+	GROUP BY s.seat_no 
+	ORDER BY COUNT(*) DESC;
+	</pre>
+
+	<p><strong>Solution 6:</strong></p>
+	<pre class="prettyprint linenums">
+	SELECT RIGHT(s.seat_no), COUNT(*) 
+	FROM seats s
+	INNER JOIN boarding_passes b
+	ON s.seat_no = b.seat_no 
+	GROUP BY s.seat_no 
+	ORDER BY COUNT(*) DESC;
+	</pre>
+
+	<p><strong>Solution 7:</strong></p>
+	<pre class="prettyprint linenums">
+	SELECT fare_conditions, COUNT(*) 
+	FROM seats s
+	INNER JOIN boarding_passes b
+	ON s.seat_no = b.seat_no 
+	GROUP BY fare_conditions
+	ORDER BY COUNT(*) DESC;
+	</pre>
+
+	<p><strong>Solution 8:</strong></p>
+	<pre class="prettyprint linenums">
+	SELECT first_name, last_name, phone, district 
+	FROM customer c 
+	LEFT JOIN address a
+	ON c.address_id = a.address_id 
+	WHERE district = 'Texas';
+	</pre>
+
+	<p><strong>Solution 9:</strong></p>
+	<pre class="prettyprint linenums">
+	SELECT * 
+	FROM address a  
+	LEFT JOIN customer c
+	ON c.address_id = a.address_id 
+	WHERE c.customer_id IS NULL;
+	</pre>
+
+	<p><strong>Solution 10:</strong></p>
+	<pre class="prettyprint linenums">
+	SELECT seat_no, ROUND(AVG(amount), 2) 
+	FROM boarding_passes b  
+	LEFT JOIN ticket_flights t 
+	ON b.ticket_no = t.ticket_no 
+	AND b.flight_id = t.flight_id  
+	GROUP BY seat_no
+	ORDER BY 2 DESC;
+	</pre>
+
+	<p><strong>Solution 11:</strong></p>
+	<pre class="prettyprint linenums">
+	SELECT employee, co.country 
+	FROM sales s
+	INNER JOIN city ci
+	ON s.city_id = ci.city_id
+	INNER JOIN country co
+	ON ci.country_id = co.country_id;
+	</pre>
+
+	<p><strong>Solution 12:</strong></p>
+	<pre class="prettyprint linenums">
+	SELECT t.ticket_no, tf.flight_id, passenger_name, scheduled_departure 
+	FROM tickets t  
+	INNER JOIN ticket_flights tf  
+	ON t.ticket_no = tf.ticket_no
+	INNER JOIN flights f 
+	ON f.flight_id = tf.flight_id;
+	</pre>
+
+	<p><strong>Solution 13:</strong></p>
+	<pre class="prettyprint linenums">
+	SELECT first_name, last_name, email, co.country 
+	FROM customer cu
+	LEFT JOIN address ad 
+	ON cu.address_id = ad.address_id   
+	LEFT JOIN city ci 
+	ON ci.city_id = ad.city_id    
+	LEFT JOIN country co
+	ON co.country = 'Brazil';
+	</pre>
+
+	<p><strong>Solution 14:</strong></p>
+	<pre class="prettyprint linenums">
+	SELECT passenger_name, SUM(total_amount) 
+	FROM tickets t
+	INNER JOIN bookings b
+	ON t.book_ref = b.book_ref
+	GROUP BY passenger_name
+	ORDER BY SUM(total_amount) DESC;
+	</pre>
+
+	<p><strong>Solution 15:</strong></p>
+	<pre class="prettyprint linenums">
+	SELECT passenger_name, fare_conditions, COUNT(*) 
+	FROM tickets t
+	INNER JOIN bookings b
+	ON t.book_ref = b.book_ref
+	INNER JOIN ticket_flights tf
+	ON t.ticket_no = tf.ticket_no
+	WHERE passenger_name = 'ALEKSANDR IVANOV'
+	GROUP BY fare_conditions, passenger_name;
+	</pre>
+
+	<p><strong>Solution 16:</strong></p>
+	<pre class="prettyprint linenums">
+	SELECT first_name, last_name, title, COUNT(*) 
+	FROM customer cu
+	INNER JOIN rental re
+	ON cu.customer_id = re.customer_id
+	INNER JOIN inventory inv
+	ON inv.inventory_id = re.inventory_id
+	INNER JOIN film fi
+	ON fi.film_id = inv.film_id
+	WHERE first_name = 'GEORGE' AND last_name = 'LINTON'
+	GROUP BY title, first_name, last_name
+	ORDER BY 4 DESC;
+	</pre>
+
+	<p><strong>TOPICS COVERED:</strong></p>
+	<pre class="prettyprint linenums">
+	- INNER JOIN
+	- LEFT JOIN
+	- FULL OUTER JOIN
+	- Aggregations (COUNT, SUM, AVG)
+	- GROUP BY and ORDER BY multiple conditions, multiple tables.
+
+	</pre>
+
+</body>
+</html>

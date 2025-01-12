@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>DAY 5-Solutions</title>
+</head>
+
+<body>
+	<p>Here are the solutions. Be aware that there can be multiple correct solutions and ways of solving the challenges.</p>
+	<p>If your solution is different, this doesn't mean it is not correct.</p>
+	<p>The objective is to find correct answers.</p>
+
+	<p><br></p><p><strong>Solution 1:</strong></p><pre class="prettyprint linenums">
+	SELECT film_id, 
+	ROUND(rental_rate / replacement_cost * 100, 2) as percentage 
+	FROM film 
+	WHERE rental_rate < 0.04 * replacement_cost 
+	ORDER BY percentage;
+	</pre>
+
+	<p><br></p><p><strong>Solution 2:</strong></p><pre class="prettyprint linenums">
+	SELECT 
+	total_amount,
+	to_char(book_date, 'Dy'),
+	CASE
+		WHEN to_char(book_date, 'Dy') = 'Mon' THEN 'Monday Special'
+		WHEN total_amount * 1.4 < 3000 THEN 'Special Deal'
+		ELSE 'No Special'
+	END 
+	FROM bookings;
+	</pre>
+
+	<p><br></p><p><strong>Solution 3:</strong></p><pre class="prettyprint linenums">
+	SELECT 
+	actual_departure - scheduled_departure AS delay_time,
+	CASE
+		WHEN actual_departure IS null THEN 'No flight'
+		WHEN actual_departure - scheduled_departure < '00:05' THEN 'Flight on Time'
+		WHEN actual_departure - scheduled_departure < '01:00' THEN 'Flight on Little Delay'
+		ELSE 'Very Late'
+	END AS status
+	FROM flights;
+	</pre>
+
+	<p><br></p><p><strong>Solution 4:</strong></p><pre class="prettyprint linenums">
+	SELECT 
+	count(*) AS no_of_flights,
+	CASE
+		WHEN actual_departure IS null THEN 'No flight'
+		WHEN actual_departure - scheduled_departure < '00:05' THEN 'Flight on Time'
+		WHEN actual_departure - scheduled_departure < '01:00' THEN 'Flight on Little Delay'
+		ELSE 'Very Late'
+	END AS is_late
+	FROM flights
+	GROUP BY is_late;
+	</pre>
+
+	<p><br></p><p><strong>Solution 5:</strong></p><pre class="prettyprint linenums">
+	SELECT 
+	Count(*), 
+	CASE
+		WHEN rating IN ('PG', 'PG-13') OR length > 210 THEN 'Great rating'
+		WHEN description LIKE '%Drama%' AND length > 90 THEN 'Long Drama'
+		WHEN description LIKE '%Drama%' AND length <= 90 THEN 'Short Drama'
+		WHEN rental_rate < 1.00 THEN 'Very Cheap'
+		ELSE 'Other'
+	END AS is_Ratings
+	FROM film
+	GROUP BY is_Ratings;
+	</pre>
+
+	<p><br></p><p><strong>Solution 6:</strong></p><pre class="prettyprint linenums">
+	SELECT 
+	SUM(CASE WHEN rating = 'G' THEN 1 ELSE 0 END) AS "G", 
+	SUM(CASE WHEN rating = 'R' THEN 1 ELSE 0 END) AS "R",
+	SUM(CASE WHEN rating = 'NC-17' THEN 1 ELSE 0 END) AS "NC-17",
+	SUM(CASE WHEN rating = 'PG-13' THEN 1 ELSE 0 END) AS "PG-13",
+	SUM(CASE WHEN rating = 'PG' THEN 1 ELSE 0 END) AS "PG"
+	FROM film;
+	</pre>
+
+	<p><br></p><p><strong>Solution 7:</strong></p><pre class="prettyprint linenums">
+	SELECT rental_date, 
+	COALESCE(CAST(return_date AS VARCHAR), 'not returned') AS return_status 
+	FROM rental 
+	ORDER BY return_date DESC;
+	</pre>
+
+	<p><br></p><p><strong>TOPIC COVERED</strong></p><pre class="prettyprint linenums">
+		MATHEMATICAL FUNCTIONS AND OPERATORS, CASE STATEMENT, 9. CASE WHEN & SUM, COALESCE(), CAST(), REPLACE() .</pre>
+</body>
+</html>

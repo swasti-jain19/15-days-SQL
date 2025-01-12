@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAY 7-Solutions</title>
+</head>
+
+<body>
+
+    <p>Here are the solutions for Day 7. Be aware that there can be multiple correct solutions and ways of solving the challenges.</p>
+    <p>If your solution is different, it doesn't mean that your solution is not correct.</p>
+    <p>You should just find the correct answers.</p>
+
+    <p><br></p><p><strong>Solution 1:</strong></p>
+    <pre class="prettyprint linenums">
+    SELECT first_name, 'actor' as origin FROM actor 
+    UNION 
+    SELECT first_name, 'customer' as test1 FROM customer
+    UNION
+    SELECT first_name, 'staff' FROM staff
+    ORDER BY 2 DESC;
+    </pre>
+    
+    <p><br></p><p><strong>Solution 2:</strong></p>
+    <pre class="prettyprint linenums">
+    SELECT * FROM payment
+    WHERE amount > (SELECT AVG(amount) FROM payment);
+    </pre>
+    
+    <p><br></p><p><strong>Solution 3:</strong></p>
+    <pre class="prettyprint linenums">
+    SELECT * FROM film  
+    WHERE length > (SELECT AVG(length) FROM film);
+    </pre>
+    
+    <p><br></p><p><strong>Solution 4:</strong></p>
+    <pre class="prettyprint linenums">
+    SELECT * FROM film  
+    WHERE film_id IN 
+    (SELECT film_id FROM inventory  
+    WHERE store_id=2
+    GROUP BY film_id 
+    HAVING COUNT(*) > 3);
+    </pre>
+    
+    <p><br></p><p><strong>Solution 5:</strong></p>
+    <pre class="prettyprint linenums">
+    SELECT first_name, last_name FROM customer 
+    WHERE customer_id IN (SELECT customer_id 
+    FROM payment
+    WHERE DATE(payment_date)='2020-01-25');
+    </pre>
+    
+    <p><br></p><p><strong>Solution 6:</strong></p>
+    <pre class="prettyprint linenums">
+    SELECT first_name, email FROM customer
+    WHERE customer_id IN (SELECT customer_id  
+    FROM payment 
+    GROUP BY customer_id 
+    HAVING SUM(amount)>30);
+    </pre>
+    
+    <p><br></p><p><strong>Solution 7:</strong></p>
+    <pre class="prettyprint linenums">
+    SELECT first_name, email FROM customer
+    WHERE customer_id IN (SELECT customer_id  
+    FROM payment 
+    GROUP BY customer_id 
+    HAVING SUM(amount)>30)
+    AND customer_id IN (SELECT customer_id FROM customer
+    INNER JOIN address
+    ON address.address_id = customer.address_id  
+    WHERE district = 'California');
+    </pre>
+    
+    <p><br></p><p><strong>Solution 8:</strong></p>
+    <pre class="prettyprint linenums">
+    SELECT AVG(total_amount) FROM   
+    (SELECT customer_id, SUM(amount) as total_amount FROM PAYMENT
+    GROUP BY customer_id) as subquery;
+    </pre>
+    
+    <p><br></p><p><strong>Solution 9:</strong></p>
+    <pre class="prettyprint linenums">
+    SELECT ROUND(AVG(amount_per_day), 2) as daily_rev_avg FROM
+    (SELECT SUM(amount) as amount_per_day,   
+    DATE(payment_date) FROM payment 
+    GROUP BY DATE(payment_date)) A;
+    </pre>
+    
+    <p><br></p><p><strong>Solution 10:</strong></p>
+    <pre class="prettyprint linenums">
+    SELECT *, (SELECT ROUND(AVG(amount), 2) FROM payment)
+    FROM payment;
+    </pre>
+    
+    <p><br></p><p><strong>Solution 11:</strong></p>
+    <pre class="prettyprint linenums">
+    SELECT *, (SELECT MAX(amount) FROM payment) as amount FROM payment;
+    </pre>
+
+    <p><br></p><p><strong>TOPIC COVERED:</strong></p>
+    <pre class="prettyprint linenums">
+    SQL Aggregates, Subqueries, and Joins, Complex Filtering with Conditions, Joins and Nested Queries.
+    </pre>
+</body>
+</html>

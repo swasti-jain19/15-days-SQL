@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAY 4 - Challenges</title>
+</head>
+
+<body>
+    <p>
+        <strong>Question 1:</strong>
+    </p>
+    <p>Level: Easy</p>
+    <p>Topic:&nbsp;STRING FUNCTIONS (LOWER, LENGTH)</p>
+    <p>Task:&nbsp;Write a SQL query to retrieve the first name, last name, and email of all customers whose first or last name has more than 10 characters. Convert all of them to lowercase.</p>
+    <p>Answer: jane.doe@sakilacustomer.org</p>
+    
+    <p><br></p>
+
+    <p>
+        <strong>Question 2:</strong>
+    </p>
+    <p>Level: Easy</p>
+    <p>Topic:&nbsp;STRING FUNCTION (RIGHT)</p>
+    <p>Task:&nbsp;Write a SQL query to extract the last 5 characters of the email of all customers.</p>
+    <p>Answer: @gmail.com</p>
+
+    <p><br></p>
+
+    <p>
+        <strong>Question 3:</strong>
+    </p>
+    <p>Level: Moderate</p>
+    <p>Topic:&nbsp;STRING FUNCTIONS (RIGHT, LEFT)</p>
+    <p>Task:&nbsp;Write a SQL query to extract the second character from the last 5 characters of the customer's email.</p>
+    <p>Answer: g</p>
+
+    <p><br></p>
+
+    <p>
+        <strong>Question 4:</strong>
+    </p>
+    <p>Level: Moderate</p>
+    <p>Topic:&nbsp;STRING FUNCTIONS (CONCATENATION)</p>
+    <p>Task:&nbsp;Write a SQL query to mask all but the first character of the email address, leaving the domain part intact.</p>
+    <p>Answer: j***@gmail.com</p>
+
+    <p><br></p>
+
+    <p>
+        <strong>Question 5:</strong>
+    </p>
+    <p>Level: Moderate</p>
+    <p>Topic:&nbsp;STRING FUNCTIONS (CONCATENATION, SUBSTRING)</p>
+    <p>Task:&nbsp;Write a SQL query to retrieve the last name and the portion of the email before the '.' character.</p>
+    <p>Answer: SMITH,johnsmith</p>
+
+    <p><br></p>
+
+    <p>
+        <strong>Question 6:</strong>
+    </p>
+    <p>Level: Moderate</p>
+    <p>Topic:&nbsp;STRING FUNCTIONS (SUBSTRING, POSITION)</p>
+    <p>Task:&nbsp;Write a SQL query to retrieve the portion of the email after the '.' character and before the '@'.</p>
+    <p>Answer: smith</p>
+
+    <p><br></p>
+
+    <p>
+        <strong>Question 7:</strong>
+    </p>
+    <p>Level: Moderate</p>
+    <p>Topic:&nbsp;STRING FUNCTIONS (CONCATENATION, SUBSTRING)</p>
+    <p>Task:&nbsp;Write a SQL query to partially mask an email address while keeping the first character, the domain, and the second character of the portion after '.' visible.</p>
+    <p>Answer: j***@gm***.com</p>
+
+    <p><br></p>
+
+    <p>
+        <strong>Question 8:</strong>
+    </p>
+    <p>Level: Moderate</p>
+    <p>Topic:&nbsp;STRING FUNCTIONS (CONCATENATION)</p>
+    <p>Task:&nbsp;Write a SQL query to display the first 3 characters of the email before '.' as '***' and keep the domain intact.</p>
+    <p>Answer: ***@gmail.com</p>
+
+    <p><br></p>
+
+    <p>
+        <strong>Question 9:</strong>
+    </p>
+    <p>Level: Moderate</p>
+    <p>Topic:&nbsp;AGGREGATE FUNCTION (SUM, GROUP BY)</p>
+    <p>Task:&nbsp;Write a SQL query to get the total payment amount grouped by the month of the payment.</p>
+    <p>Answer: 500</p>
+
+    <p><br></p>
+
+    <p>
+        <strong>Question 10:</strong>
+    </p>
+    <p>Level: Moderate</p>
+    <p>Topic:&nbsp;AGGREGATE FUNCTION (SUM, TO_CHAR)</p>
+    <p>Task:&nbsp;Write a SQL query to display the total payment amount, grouped by day (displaying the day as 'Day, DD/MM/YYYY').</p>
+    <p>Answer: 1000, Thu, 01/01/2020</p>
+
+    <p><br></p>
+
+    <p>
+        <strong>Question 11:</strong>
+    </p>
+    <p>Level: Moderate</p>
+    <p>Topic:&nbsp;AGGREGATE FUNCTION (SUM, TO_CHAR)</p>
+    <p>Task:&nbsp;Write a SQL query to display the total payment amount grouped by month and year (display the month and year as 'Mon, YYYY').</p>
+    <p>Answer: 3000, Jan, 2020</p>
+
+    <p><br></p>
+
+    <p>
+        <strong>Question 12:</strong>
+    </p>
+    <p>Level: Moderate</p>
+    <p>Topic:&nbsp;AGGREGATE FUNCTION (SUM, TO_CHAR)</p>
+    <p>Task:&nbsp;Write a SQL query to display the total payment amount grouped by the hour and minute of the payment.</p>
+    <p>Answer: 1500, Mon, 12:30</p>
+
+    <p><br></p>
+
+    <p>
+        <strong>Question 13:</strong>
+    </p>
+    <p>Level: Moderate</p>
+    <p>Topic:&nbsp;DATE/TIME (CURRENT_TIMESTAMP, INTERVAL)</p>
+    <p>Task:&nbsp;Write a SQL query to get the current timestamp and calculate the rental duration in days between rental and return dates.</p>
+    <p>Answer: 2024-11-28 10:05:00, 5 days</p>
+
+    <p><br></p>
+
+    <p>
+        <strong>Question 14:</strong>
+    </p>
+    <p>Level: Moderate</p>
+    <p>Topic:&nbsp;DATE/TIME (EXTRACT)</p>
+    <p>Task:&nbsp;Write a SQL query to calculate the rental duration in hours and display it with a label 'hours'.</p>
+    <p>Answer: 48 hours</p>
+
+    <p><br></p>
+
+    <p>
+        <strong>Question 15:</strong>
+    </p>
+    <p>Level: Moderate</p>
+    <p>Topic:&nbsp;DATE/TIME (INTERVAL)</p>
+    <p>Task:&nbsp;Write a SQL query to get the rental duration for customer with ID 35.</p>
+    <p>Answer: 5 days</p>
+
+    <p><br></p>
+
+    <p>
+        <strong>Question 16:</strong>
+    </p>
+    <p>Level: Advanced</p>
+    <p>Topic:&nbsp;AGGREGATE FUNCTION (AVG, GROUP BY)</p>
+    <p>Task:&nbsp;Write a SQL query to calculate the average rental duration for each customer, ordered by the longest rental duration.</p>
+    <p>Answer: 8 days</p>
+</body>
+
+</html>

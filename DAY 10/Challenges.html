@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAY 10-Challenges</title>
+</head>
+<body>
+    <p>
+        <strong>Question 1:</strong>
+    </p>
+    <p>Level: Easy</p>
+    <p>Topic: UPDATE</p>
+    <p>Task: Update all rental prices that are 0.99 to 1.99.<br>
+        The customer table needs to be altered as well:<br>
+        a. Add the column initials (data type varchar(10))<br>
+        b. Update the values to the actual initials for example Frank Smith should be F.S.</p>
+    <p>Answer: Rental prices updated successfully.</p>
+
+    <p>
+        <strong>Question 2:</strong>
+    </p>
+    <p>Level: Moderate</p>
+    <p>Topic: ALTER TABLE</p>
+    <p>Task: Create a table called users with the following columns:<br>
+        user_id, first_name, last_name, user_name, signup_date, birth_date. <br>
+         1. During creation add the DEFAULT current_date to the signup_date. <br>
+         2. Add the constraint namelength to ensure the user_name has more than 2 characters. <br>
+         3. Add the constraint with default name to ensure the birthdate is after 01-01-1900. <br>
+         4. After the creation rename namelength to name_length. <br>
+         5. Try to add Frank Smith with user name franksmith1 and birthday 02-12-1905. <br>
+         6. Modify the constraint on the birthdate so that no dates after 01-01-1910 are allowed. <br>
+         7. Try again to add Frank Smith with user name franksmith1 and birthday 02-12-1905.</p>
+    <p>Answer: Column added, and initials updated successfully.</p>
+
+    <p>
+        <strong>Question 3:</strong>
+    </p>
+    <p>Level: Advanced</p>
+    <p>Topic: CREATE TABLE</p>
+    <p>Task: During creation add the DEFAULT 'Not defined' to the genre.<br>
+        2. Add the not null constraint to the song_name column. <br>
+        3. Add the constraint with default name to ensure the price is at least 1.99.<br>
+        4. Add the constraint date_check to ensure the release date is between today and 
+       01-01-1950.<br>
+        5. Try to add Frank Smith with user name franksmith1 and birthday 02-12-1905.<br>
+        6. Modify the constraint on the birthdate so that no dates after 01-01-1910 are allowed.<br>
+        7. Try again to add Frank Smith with user name franksmith1 and birthday 02-12-1905.</p>
+    <p>Answer: Table created successfully, constraints applied.</p>
+
+    <p>
+        <strong>Question 4:</strong>
+    </p>
+    <p>Level: Advanced</p>
+    <p>Topic: CREATE TABLE</p>
+    <p>Task: Create a view called films_category that shows a list of the film titles including their title, length and category name ordered descendingly by the length. <br>
+    Filter the results to only the movies in the category 'Action' and 'Comedy'. </p>
+    <p>Answer: Table created, default values, and constraints applied successfully.</p>
+
+    <p>
+        <strong>Question 5:</strong>
+    </p>
+    <p>Level: Moderate</p>
+    <p>Topic: CREATE VIEW</p>
+    <p>In this challenge we use again the view <em>v_customer_info </em>lik this first:</p><pre class="prettyprint linenums">
+        CREATE VIEW v_customer_info
+        AS
+        SELECT cu.customer_id,
+            cu.first_name || ' ' || cu.last_name AS name,
+            a.address,
+            a.postal_code,
+            a.phone,
+            city.city,
+            country.country
+             FROM customer cu
+             JOIN address a ON cu.address_id = a.address_id
+             JOIN city ON a.city_id = city.city_id
+             JOIN country ON city.country_id = country.country_id
+        ORDER BY customer_id</pre><p><strong>You need to perform the following tasks:</strong></p>
+        <p>1. Rename the view to v_customer_information.</p>
+        <p>2. &nbsp;Rename the customer_id column to c_id.</p>
+        <p>3. &nbsp;Add also the initial column as the third column to the view by replacing the view.</p>
+
+    <p>
+        <strong>Question 6:</strong>
+    </p>
+    <p>Level: Simple</p>
+    <p>Topic: UPDATE</p>
+    <p>Task: Update the genre of a song to 'Pop music' with a specific song ID = 4 .</p>
+    <p>Answer: Genre updated successfully.</p>
+
+    <p>
+        <strong>Question 7:</strong>
+    </p>
+    <p>Level: Simple</p>
+    <p>Topic: DELETE</p>
+    <p>Task: Delete rows from the 'songs' table where the song_id is in (3, 4).</p>
+    <p>Answer: Rows deleted successfully.</p>
+
+    <p>
+        <strong>Question 8:</strong>
+    </p>
+    <p>Level: Moderate</p>
+    <p>Topic: CREATE TABLE AS</p>
+    <p>Task: Create a new table 'customer_anonymous' with customer ID and initials of customers whose first name starts with 'C'.</p>
+    <p>Answer: Table created successfully.</p>
+
+    <p>
+        <strong>Question 10:</strong>
+    </p>
+    <p>Level: Advanced</p>
+    <p>Topic: DROP VIEW</p>
+    <p>Task: Drop the materialized view 'customer_anonymous'.</p>
+    <p>Answer: View dropped successfully.</p>
+</body>
+</html>

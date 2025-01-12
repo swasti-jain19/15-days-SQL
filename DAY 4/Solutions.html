@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAY 4 - Solutions</title>
+</head>
+
+<body>
+
+    <p>Here are the solutions for Day 4. Be aware that there can be multiple correct solutions and ways of solving the challenges.</p>
+    <p>If your solution is different, this doesn't mean that your solution is incorrect.</p>
+    <p>You should just find the correct answers.</p>
+
+    <p><br></p><p><strong>Solution 1:</strong></p>
+    <pre class="prettyprint linenums">
+    SELECT LOWER(first_name), LOWER(last_name), LOWER(email) 
+    FROM CUSTOMER 
+    WHERE LENGTH(first_name) > 10 OR LENGTH(last_name) > 10;
+    </pre>
+    
+    <p><br></p><p><strong>Solution 2:</strong></p>
+    <pre class="prettyprint linenums">
+    SELECT RIGHT(email, 5) 
+    FROM CUSTOMER;
+    </pre>
+
+    <p><br></p><p><strong>Solution 3:</strong></p>
+    <pre class="prettyprint linenums">
+    SELECT RIGHT(LEFT(RIGHT(email, 5), 2), 1) 
+    FROM CUSTOMER;
+    </pre>
+
+    <p><br></p><p><strong>Solution 4:</strong></p>
+    <pre class="prettyprint linenums">
+    SELECT LEFT(email, 1) || '***' || SUBSTRING(email FROM POSITION('@' IN email)) 
+    FROM CUSTOMER;
+    </pre>
+
+    <p><br></p><p><strong>Solution 5:</strong></p>
+    <pre class="prettyprint linenums">
+    SELECT last_name || ',' || LEFT(email, POSITION('.' IN email)-1) 
+    FROM CUSTOMER;
+
+    OR
+
+    SELECT last_name || ',' || SUBSTRING(email FROM 0 FOR POSITION('.' IN email)) 
+    FROM CUSTOMER;
+    </pre>
+
+    <p><br></p><p><strong>Solution 6:</strong></p>
+    <pre class="prettyprint linenums">
+    SELECT SUBSTRING(email FROM POSITION('.' IN email)+1 FOR LENGTH(last_name)) 
+    FROM CUSTOMER;
+
+    OR
+
+    SELECT SUBSTRING(email FROM POSITION('.' IN email)+1 FOR POSITION('@' IN email)-1 - POSITION('.' IN email)) 
+    FROM CUSTOMER;
+    </pre>
+
+    <p><br></p><p><strong>Solution 7:</strong></p>
+    <pre class="prettyprint linenums">
+    SELECT LEFT(email, 1) || '***' || SUBSTRING(email FROM POSITION('.' IN email) FOR 2) || '***' || SUBSTRING(email FROM POSITION('@' IN email)) 
+    FROM CUSTOMER;
+    </pre>
+
+    <p><br></p><p><strong>Solution 8:</strong></p>
+    <pre class="prettyprint linenums">
+    SELECT '***' || SUBSTRING(email FROM POSITION('.' IN email)-1 FOR 3) || '***' || SUBSTRING(email FROM POSITION('@' IN email)) 
+    FROM CUSTOMER;
+    </pre>
+
+    <p><br></p><p><strong>Solution 9:</strong></p>
+    <pre class="prettyprint linenums">
+    SELECT EXTRACT(month FROM payment_date), SUM(amount) 
+    FROM PAYMENT 
+    GROUP BY EXTRACT(month FROM payment_date);
+    </pre>
+
+    <p><br></p><p><strong>Solution 10:</strong></p>
+    <pre class="prettyprint linenums">
+    SELECT SUM(amount), TO_CHAR(payment_date, 'Dy , DD/MM/YYYY') AS day 
+    FROM PAYMENT 
+    GROUP BY day 
+    ORDER BY SUM(amount);
+    </pre>
+
+    <p><br></p><p><strong>Solution 11:</strong></p>
+    <pre class="prettyprint linenums">
+    SELECT SUM(amount), TO_CHAR(payment_date, 'Mon , YYYY') AS day 
+    FROM PAYMENT 
+    GROUP BY day 
+    ORDER BY SUM(amount);
+    </pre>
+
+    <p><br></p><p><strong>Solution 12:</strong></p>
+    <pre class="prettyprint linenums">
+    SELECT SUM(amount), TO_CHAR(payment_date, 'Dy , HH:MI') AS day 
+    FROM PAYMENT 
+    GROUP BY day 
+    ORDER BY SUM(amount);
+    </pre>
+
+    <p><br></p><p><strong>Solution 13:</strong></p>
+    <pre class="prettyprint linenums">
+    SELECT CURRENT_TIMESTAMP, return_date - rental_date 
+    FROM RENTAL;
+    </pre>
+
+    <p><br></p><p><strong>Solution 14:</strong></p>
+    <pre class="prettyprint linenums">
+    SELECT CURRENT_TIMESTAMP, EXTRACT(day FROM return_date - rental_date)*24 + EXTRACT(hour FROM return_date - rental_date) || ' hours' 
+    FROM RENTAL;
+    </pre>
+
+    <p><br></p><p><strong>Solution 15:</strong></p>
+    <pre class="prettyprint linenums">
+    SELECT customer_id, return_date - rental_date AS rental_duration 
+    FROM RENTAL 
+    WHERE customer_id = 35;
+    </pre>
+
+    <p><br></p><p><strong>Solution 16:</strong></p>
+    <pre class="prettyprint linenums">
+    SELECT customer_id, AVG(return_date - rental_date) AS avg_rental_duration 
+    FROM RENTAL 
+    GROUP BY customer_id 
+    ORDER BY avg_rental_duration DESC;
+    </pre>
+
+    <p><br></p><p><strong>TOPICS COVERED:</strong></p>
+    <pre class="prettyprint linenums">
+		SubString, EXTRACT, CONCATINATION(||), LENGTH(), LOWER(), UPPER(), LEFT(), RIGHT(), POSITION(), TO_CHAR(), INTERVALS & TIMESTAMPS
+
+    </pre>
+
+</body>
+</html>

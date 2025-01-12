@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>DAY 1-Solutions</title>
+</head>
+
+<body>
+	<p>Here are the solutions. Be aware that there can be multiple correct solutions and ways of solving the challanges.</p><p>If your solution is different this doesn't mean that your solution is not correct.</p><p>You should just find the correct answers.</p>
+	<p><br></p><p><strong>Solution 1:</strong></p><pre class="prettyprint linenums">
+		SELECT 
+		first_name, last_name, email 
+		FROM CUSTOMER;</pre>
+
+		<p><br></p><p><strong>Solution 2:</strong></p><pre class="prettyprint linenums">
+			SELECT
+			DISTINCT district 
+			FROM ADDRESS;
+			</pre>
+
+		<p><br></p><p><strong>Solution 3:</strong></p><pre class="prettyprint linenums">
+		SELECT 
+		DISTINCT amount  
+		from PAYMENT 
+		ORDER BY amount desc;</pre>
+
+		
+		
+		<p><br></p><p><strong>Solution 4:</strong></p><pre class="prettyprint linenums">
+		SELECT 
+		rental_date 
+		FROM RENTAL 
+		ORDER BY rental_date desc 
+		LIMIT 1;
+		</pre>
+		
+		<p><br></p><p><strong>Solution 5:</strong></p><pre class="prettyprint linenums">
+		SELECT 
+		count(*) 
+		FROM FILM;
+		</pre>
+		
+		<p><br></p><p><strong>Solution 6:</strong></p><pre class="prettyprint linenums">
+		SELECT 
+		DISTINCT 
+		count(*) last_name 
+		FROM CUSTOMER;
+		<p><br></p>
+		<p><bold>OR</bold></p>
+	    </pre>
+		<pre class="prettyprint linenums">
+			SELECT 
+			count(DISTINCT last_name)
+			FROM CUSTOMER;
+			</pre>
+		
+		<p><br></p><p><strong>Solution 7:</strong></p><pre class="prettyprint linenums">
+		SELECT 
+		first_name, 
+		last_name 
+		FROM CUSTOMER 
+		ORDER BY last_name desc, 
+		first_name DESC;</pre>
+		
+		<p><br></p><p><strong>TOPIC COVERED</strong></p><pre class="prettyprint linenums">
+		SELECT, ORDER BY, DESC/ASC, SELECT DISTINCT, LIMIT, COUNT</pre>
+</body>
+</html>

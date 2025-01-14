@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAY 12 - Challenges</title>
+</head>
+
+<body>
+    <p>
+        <strong>Question 1:</strong>
+    </p>
+    <p>Level: Hard</p>
+    <p>Topic: GROUPING SETS</p>
+    <p>Task: Write a query to calculate the total payment amount grouped by staff_id, month, and their combinations.</p>
+    <p>Answer:</p>
+    <p>
+        SELECT <br>
+        &emsp;TO_CHAR(payment_date, 'Month') as month, <br>
+        &emsp;staff_id, <br>
+        &emsp;SUM(amount) <br>
+        FROM payment <br>
+        GROUP BY GROUPING SETS ( <br>
+        &emsp;(staff_id), <br>
+        &emsp;(month), <br>
+        &emsp;(staff_id, month) <br>
+        ) <br>
+        ORDER BY 1, 2;
+    </p>
+
+    <p><br></p>
+    <p>
+        <strong>Question 2:</strong>
+    </p>
+    <p>Level: Hard</p>
+    <p>Topic: GROUPING SETS</p>
+    <p>Task: Write a query that calculates the sum of the amount for each customer and staff_id, and the overall revenue per customer.</p>
+    <p>Answer: See table example for reference.</p>
+
+    <p><br></p>
+    <p>
+        <strong>Question 3:</strong>
+    </p>
+    <p>Level: Hard</p>
+    <p>Topic: ROLLUP()</p>
+    <p>Task: Write a query to calculate booking amount rollup for the hierarchy of quarter, month, week in month, and day.</p>
+    <p>Answer: Refer to the table for booking details.</p>
+
+    <p><br></p>
+    <p>
+        <strong>Question 4:</strong>
+    </p>
+    <p>Level: Moderate</p>
+    <p>Topic: SELF JOIN</p>
+    <p>Task: Find all pairs of films with the same length.</p>
+    <p>Answer: Example pairs provided in the table.</p>
+
+    <p><br></p>
+    <p>
+        <strong>Question 5:</strong>
+    </p>
+    <p>Level: Hard</p>
+    <p>Topic: CUBE()</p>
+    <p>Task: Write a query to return all grouping sets in combinations of customer_id, date, and title with payment amount aggregation.</p>
+    <p>Answer: Format your query to match the desired output in the image.</p>
+
+    <p><br></p>
+    <p>
+        <strong>Question 6:</strong>
+    </p>
+    <p>Level: Moderate</p>
+    <p>Topic: SELF JOIN</p>
+    <p>Task: Use a self-join query to analyze relationships within the same table.</p>
+    <p>Answer: Write a self-join query as needed.</p>
+
+    <p><br></p>
+    <p>
+        <strong>Question 7:</strong>
+    </p>
+    <p>Level: Easy</p>
+    <p>Topic: NATURAL JOIN</p>
+    <p>Task: Write a query using a natural join to merge tables with common columns.</p>
+    <p>Answer: Utilize NATURAL JOIN syntax for the query.</p>
+
+    <p><br></p>
+    <p>
+        <strong>Question 8:</strong>
+    </p>
+    <p>Level: Moderate</p>
+    <p>Topic: CROSS JOIN</p>
+    <p>Task: Write a query using a cross join to find all combinations of rows between two tables.</p>
+    <p>Answer: Use CROSS JOIN syntax appropriately.</p>
+
+    <p><br></p>
+</body>
+
+</html>

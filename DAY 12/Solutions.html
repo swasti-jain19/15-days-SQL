@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAY 12 - Solutions</title>
+</head>
+
+<body>
+    <p>Here are the solutions. Be aware that there can be multiple correct solutions and ways of solving the challenges.</p>
+    <p>If your solution is different, this doesn't mean that your solution is not correct.</p>
+    <p>You should just find the correct answers.</p>
+
+    <p><br></p><p><strong>Solution 1:</strong></p><pre class="prettyprint linenums">
+SELECT 
+    TO_CHAR(payment_date, 'Month') AS month,
+    staff_id,
+    SUM(amount) AS total_payment
+FROM 
+    payment
+GROUP BY 
+    GROUPING SETS (
+        (staff_id),
+        (TO_CHAR(payment_date, 'Month')),
+        (staff_id, TO_CHAR(payment_date, 'Month'))
+    )
+ORDER BY 
+    1, 2;
+    </pre>
+
+    <p><br></p><p><strong>Solution 2:</strong></p><pre class="prettyprint linenums">
+SELECT 
+    customer_id,
+    staff_id,
+    SUM(amount) AS total_amount
+FROM 
+    payment
+GROUP BY 
+    GROUPING SETS (
+        (customer_id),
+        (staff_id),
+        (customer_id, staff_id)
+    )
+ORDER BY 
+    customer_id, staff_id;
+    </pre>
+
+    <p><br></p><p><strong>Solution 3:</strong></p><pre class="prettyprint linenums">
+SELECT 
+    TO_CHAR(payment_date, 'Q') AS quarter,
+    TO_CHAR(payment_date, 'Month') AS month,
+    TO_CHAR(payment_date, 'WW') AS week,
+    TO_CHAR(payment_date, 'DD') AS day,
+    SUM(amount) AS booking_amount
+FROM 
+    payment
+GROUP BY 
+    ROLLUP (
+        TO_CHAR(payment_date, 'Q'),
+        TO_CHAR(payment_date, 'Month'),
+        TO_CHAR(payment_date, 'WW'),
+        TO_CHAR(payment_date, 'DD')
+    )
+ORDER BY 
+    quarter, month, week, day;
+    </pre>
+
+    <p><br></p><p><strong>Solution 4:</strong></p><pre class="prettyprint linenums">
+SELECT 
+    f1.film_id AS film1_id,
+    f2.film_id AS film2_id,
+    f1.length AS film_length
+FROM 
+    film f1
+JOIN 
+    film f2 ON f1.length = f2.length AND f1.film_id < f2.film_id
+ORDER BY 
+    f1.film_id, f2.film_id;
+    </pre>
+
+    <p><br></p><p><strong>Solution 5:</strong></p><pre class="prettyprint linenums">
+SELECT 
+    customer_id,
+    TO_CHAR(payment_date, 'YYYY-MM-DD') AS date,
+    title,
+    SUM(amount) AS total_amount
+FROM 
+    payment
+GROUP BY 
+    CUBE (
+        customer_id,
+        TO_CHAR(payment_date, 'YYYY-MM-DD'),
+        title
+    )
+ORDER BY 
+    customer_id, date, title;
+    </pre>
+
+    <p><br></p><p><strong>Solution 6:</strong></p><pre class="prettyprint linenums">
+SELECT 
+    e1.employee_id AS manager_id,
+    e2.employee_id AS employee_id
+FROM 
+    employees e1
+JOIN 
+    employees e2 ON e1.employee_id = e2.manager_id
+ORDER BY 
+    manager_id, employee_id;
+    </pre>
+
+    <p><br></p><p><strong>Solution 7:</strong></p><pre class="prettyprint linenums">
+SELECT 
+    *
+FROM 
+    table1
+NATURAL JOIN 
+    table2;
+    </pre>
+
+    <p><br></p><p><strong>Solution 8:</strong></p><pre class="prettyprint linenums">
+SELECT 
+    t1.*, t2.*
+FROM 
+    table1 t1
+CROSS JOIN 
+    table2 t2;
+    </pre>
+
+    <p><br></p><p><strong>TOPICS COVERED:</strong></p><pre class="prettyprint linenums">
+GROUPING SETS, ROLLUP(), CUBE(), SELF JOIN, NATURAL JOIN, CROSS JOIN
+    </pre>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>DAY 14-Solutions</title>
+</head>
+
+<body>
+	<p>Here are the solutions. Be aware that there can be multiple correct solutions and ways of solving the challenges.</p>
+	<p>If your solution is different, this doesn't mean that your solution is not correct.</p>
+	<p>You should just find the correct answers.</p>
+
+        <p><br></p><p><strong>Solution 1:</strong></p><pre class="prettyprint linenums">
+        CREATE FUNCTION count_rr(min_r DECIMAL(4,2), max_r DECIMAL(4,2))
+        RETURNS INT
+        LANGUAGE plpgsql
+        AS
+        $$
+        DECLARE 
+        movie_count INT;
+        BEGIN
+        SELECT count(*)
+        INTO movie_count
+        FROM film
+        WHERE rental_rate BETWEEN min_r AND max_r;
+        RETURN movie_count;
+        END;
+        $$
+
+        SELECT count_rr(3,6);
+        </pre>
+
+        <p><br></p><p><strong>Solution 2:</strong></p><pre class="prettyprint linenums">
+        CREATE FUNCTION name_search(f_name VARCHAR(20), l_name VARCHAR(20))
+        RETURNS DECIMAL(6,2)
+        LANGUAGE plpgsql
+        AS
+        $$
+        DECLARE
+        total_payment DECIMAL(6,2);
+        BEGIN
+        SELECT SUM(payment.amount)
+        INTO total_payment
+        FROM customer
+        LEFT JOIN payment
+        ON payment.customer_id = customer.customer_id
+        WHERE first_name = f_name AND last_name = l_name;
+        RETURN total_payment;
+        END;
+        $$
+
+        SELECT name_search('AMY', 'LOPEZ');
+        </pre>
+
+        <p><br></p><p><strong>Solution 3:</strong></p><pre class="prettyprint linenums">
+        CREATE TABLE acc_balance (  
+        id SERIAL PRIMARY KEY,  
+        first_name TEXT NOT NULL,  
+        last_name TEXT NOT NULL,  
+        amount DEC(9,2) NOT NULL  
+        ); 
+
+        INSERT INTO acc_balance VALUES  
+        (1, 'Tim', 'Brown', 2500),  
+        (2, 'Sandra', 'Miller', 1600);  
+
+        SELECT * FROM acc_balance;
+
+        BEGIN;
+        UPDATE acc_balance
+        SET amount = amount - 100
+        WHERE id = 1;
+
+        UPDATE acc_balance
+        SET amount = amount + 100
+        WHERE id = 2;
+
+        COMMIT;
+        </pre>
+
+        <p><br></p><p><strong>Solution 4:</strong></p><pre class="prettyprint linenums">
+        BEGIN;  
+
+        UPDATE employees  
+        SET position_title = 'Head of Sales',   
+        salary = 12587.00  
+        WHERE first_name = 'Miller' AND last_name = 'McQuarter';  
+
+        UPDATE employees  
+        SET position_title = 'Head of BI',   
+        salary = 14614.00  
+        WHERE first_name = 'Christalle' AND last_name = 'McKenny';  
+
+        COMMIT;
+        </pre>
+
+        <p><br></p><p><strong>Solution 5:</strong></p><pre class="prettyprint linenums">
+        BEGIN;  
+
+        UPDATE employees  
+        SET position_title = 'Head of Sales',   
+        salary = 12587.00  
+        WHERE first_name = 'Miller' AND last_name = 'McQuarter';  
+        SAVEPOINT s1;
+
+        DELETE FROM employees WHERE first_name = 'Miller' AND last_name = 'McQuarter';
+        ROLLBACK TO SAVEPOINT s1;
+
+        UPDATE employees  
+        SET position_title = 'Head of BI',   
+        salary = 14614.00  
+        WHERE first_name = 'Christalle' AND last_name = 'McKenny';  
+
+        COMMIT; 
+        </pre>
+
+        <p><br></p><p><strong>Solution 6:</strong></p><pre class="prettyprint linenums">
+        CREATE OR REPLACE PROCEDURE sp_transfer(tr_amount INT, sender INT, recipient INT)  
+        LANGUAGE plpgsql  
+        AS  
+        $$  
+        BEGIN  
+        -- Subtract from sender's balance  
+        UPDATE acc_balance  
+        SET amount = amount - tr_amount  
+        WHERE id = sender;  
+
+        -- Add to recipient's balance  
+        UPDATE acc_balance  
+        SET amount = amount + tr_amount  
+        WHERE id = recipient; 
+
+        COMMIT; 
+        END;  
+        $$ 
+
+        CALL sp_transfer(100, 2, 1);
+        </pre>
+
+        <p><br></p><p><strong>Solution 7:</strong></p><pre class="prettyprint linenums">
+        CREATE OR REPLACE PROCEDURE emp_swap(emp1 INT, emp2 INT)  
+        LANGUAGE plpgsql  
+        AS  
+        $$  
+        BEGIN  
+        UPDATE employees 
+        SET position_title = 'Head of Sales',   
+        salary = 12587.00
+        WHERE emp_id = emp1;  
+
+        UPDATE employees   
+        SET position_title = 'Head of BI',   
+        salary = 14614.00  
+        WHERE emp_id = emp2; 
+
+        COMMIT; 
+        END;  
+        $$ 
+
+        CALL emp_swap(2, 3);
+        </pre>
+
+        <p><br></p><p><strong>TOPICS COVERED:</strong></p><pre class="prettyprint linenums">
+            Stored procedures, transactions, ROLLBACK, COMMIT, SAVEPOINT & user-defined functions</pre>
+    </body>
+</html>

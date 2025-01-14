@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAY 14 - Challenges</title>
+</head>
+
+<body>
+    <p>
+        <strong>Question 1:</strong>
+    </p>
+    <p>Level: Moderate</p>
+    <p>Topic: User-Defined Functions</p>
+    <p>Task: Write a function to count the number of films with a rental rate within a specified range.</p>
+    <p>Answer: 
+        <br>
+        SELECT count_rr(3, 6);
+    </p>
+
+    <p><br></p>
+    <p>
+        <strong>Question 2:</strong>
+    </p>
+    <p>Level: Hard</p>
+    <p>Topic: Joins and Aggregation</p>
+    <p>Task: Write a query to calculate the total payment amount for a specific customer based on their first and last name.</p>
+    <p>Answer: 
+        <br>
+        SELECT name_search('AMY', 'LOPEZ');
+    </p>
+
+    <p><br></p>
+    <p>
+        <strong>Question 3:</strong>
+    </p>
+    <p>Level: Moderate</p>
+    <p>Topic: Transactions and Rollbacks</p>
+    <p>Task: Write a set of transactions that involve updating account balances with a rollback feature.</p>
+    <p>Answer: 
+        <br>
+        COMMIT;  
+        <br>
+        UPDATE acc_balance
+        SET amount = amount - 100
+        WHERE id = 1;
+    </p>
+
+    <p><br></p>
+    <p>
+        <strong>Question 4:</strong>
+    </p>
+    <p>Level: Easy</p>
+    <p>Topic: Transaction Commit</p>
+    <p>Task: Write a simple transaction to swop the position and salary for 'Miller McQuarter' and 'Christalle McKenny'.</p>
+    <p>Answer: 
+        <br>
+        UPDATE employees 
+        SET position_title = 'Head of Sales', salary = 12587.00 
+        WHERE first_name = 'Miller' AND last_name = 'McQuarter';
+    </p>
+
+    <p><br></p>
+    <p>
+        <strong>Question 5:</strong>
+    </p>
+    <p>Level: Hard</p>
+    <p>Topic: Savepoint and Rollback</p>
+    <p>Task: Write a query to simulate a rollback to a savepoint after performing an update and delete operation on 'Christalle McKenny' for the above query.</p>
+    <p>Answer: 
+        <br>
+        SAVEPOINT s1;
+        <br>
+        ROLLBACK TO SAVEPOINT s1;
+    </p>
+
+    <p><br></p>
+    <p>
+        <strong>Question 6:</strong>
+    </p>
+    <p>Level: Moderate</p>
+    <p>Topic: Stored Procedures for Money Transfer</p>
+    <p>Task: Write a stored procedure to transfer money between two accounts of 100.</p>
+    <p>Answer: 
+        <br>
+        CALL sp_transfer(100, 2, 1);
+    </p>
+
+    <p><br></p>
+    <p>
+        <strong>Question 7:</strong>
+    </p>
+    <p>Level: Hard</p>
+    <p>Topic: Employee Position Swap</p>
+    <p>Task: Write a stored procedure to swap positions between two employees based on their employee IDs(as mentioned above).</p>
+    <p>Answer: 
+        <br>
+        CALL emp_swap(2, 3);
+    </p>
+
+    <p><br></p>
+    <p>
+        <strong>TOPICS COVERED:</strong>
+    </p>
+    <pre class="prettyprint linenums">
+        Stored procedures, transactions, ROLLBACK, COMMIT, SAVEPOINT & user-defined functions</pre>
+</body>
+
+</html>

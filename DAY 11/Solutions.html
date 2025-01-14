@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAY 11 - Solutions</title>
+</head>
+
+<body>
+    <p>Here are the solutions. Be aware that there can be multiple correct solutions and ways of solving the challenges.</p>
+    <p>If your solution is different, this doesn't mean that your solution is incorrect.</p>
+    <p>You should just find the correct answers.</p>
+    
+    <p><br></p>
+    <p><strong>Solution 1:</strong></p>
+    <pre class="prettyprint linenums">
+SELECT 
+    transaction_id,
+    payment_type,
+    customer_id,
+    price_in_transaction, 
+    (SELECT SUM(price_in_transaction) 
+     FROM sales s2
+     WHERE s2.customer_id = s1.customer_id)
+FROM sales s1;
+    </pre>
+
+    <p><br></p>
+    <p><strong>Solution 2:</strong></p>
+    <pre class="prettyprint linenums">
+SELECT
+    transaction_id,
+    payment_type,
+    customer_id,
+    price_in_transaction, 
+    SUM(price_in_transaction) OVER(PARTITION BY customer_id) AS total_price
+FROM sales;
+    </pre>
+
+    <p><br></p>
+    <p><strong>Solution 3:</strong></p>
+    <pre class="prettyprint linenums">
+SELECT 
+    f.title,
+    f.length,
+    c.name AS category,
+    AVG(f.length) OVER(PARTITION BY c.name) AS avg_length_in_category
+FROM 
+    film f
+JOIN 
+    film_category fc ON f.film_id = fc.film_id
+JOIN 
+    category c ON fc.category_id = c.category_id
+ORDER BY 
+    f.film_id;
+    </pre>
+
+    <p><br></p>
+    <p><strong>Solution 4:</strong></p>
+    <pre class="prettyprint linenums">
+SELECT 
+    p.payment_id,
+    p.customer_id,
+    p.amount,
+    COUNT(p.payment_id) OVER(PARTITION BY p.customer_id) AS total_payments,
+    SUM(p.amount) OVER(PARTITION BY p.customer_id) AS total_amount
+FROM 
+    payment p
+ORDER BY 
+    p.payment_id;
+    </pre>
+
+    <p><br></p>
+    <p><strong>Solution 5:</strong></p>
+    <pre class="prettyprint linenums">
+SELECT 
+    flight_id,
+    departure_airport,
+    actual_arrival - scheduled_arrival AS delay,
+    SUM(actual_arrival - scheduled_arrival) OVER(ORDER BY flight_id) AS running_total_delay
+FROM 
+    flights
+ORDER BY 
+    flight_id;
+    </pre>
+
+    <p><br></p>
+    <p><strong>Solution 6:</strong></p>
+    <pre class="prettyprint linenums">
+SELECT 
+    flight_id,
+    departure_airport,
+    actual_arrival - scheduled_arrival AS delay,
+    SUM(actual_arrival - scheduled_arrival) OVER(PARTITION BY departure_airport ORDER BY flight_id) AS running_total_delay
+FROM 
+    flights
+ORDER BY 
+    departure_airport, flight_id;
+    </pre>
+
+    <p><br></p>
+    <p><strong>Solution 7:</strong></p>
+    <pre class="prettyprint linenums">
+WITH customer_payments AS (
+    SELECT 
+        cl.name,
+        cl.country,
+        COUNT(p.payment_id) AS payment_count,
+        SUM(p.amount) AS total_sales
+    FROM 
+        customer_list cl
+    JOIN 
+        payment p ON cl.customer_id = p.customer_id
+    GROUP BY 
+        cl.name, cl.country
+),
+ranked_customers AS (
+    SELECT 
+        name,
+        country,
+        payment_count,
+        total_sales,
+        RANK() OVER(PARTITION BY country ORDER BY total_sales DESC) AS rank
+    FROM 
+        customer_payments
+)
+SELECT 
+    name,
+    country,
+    payment_count,
+    total_sales
+FROM 
+    ranked_customers
+WHERE 
+    rank <= 3;
+    </pre>
+
+    <p><br></p>
+    <p><strong>Solution 8:</strong></p>
+    <pre class="prettyprint linenums">
+WITH daily_revenue AS (
+    SELECT 
+        DATE(payment_date) AS payment_day,
+        SUM(amount) AS daily_revenue
+    FROM 
+        payment
+    GROUP BY 
+        DATE(payment_date)
+)
+SELECT 
+    payment_day,
+    daily_revenue,
+    LAG(daily_revenue) OVER(ORDER BY payment_day) AS previous_day_revenue,
+    ROUND((daily_revenue - LAG(daily_revenue) OVER(ORDER BY payment_day)) / 
+          NULLIF(LAG(daily_revenue) OVER(ORDER BY payment_day), 0) * 100, 2) AS percentage_growth
+FROM 
+    daily_revenue;
+    </pre>
+
+    <p><br></p>
+    <p><strong>Solution 9:</strong></p>
+    <pre class="prettyprint linenums">
+WITH staff_revenue AS (
+    SELECT 
+        s.first_name,
+        s.last_name,
+        s.staff_id,
+        p.customer_id,
+        SUM(p.amount) AS total_revenue
+    FROM 
+        staff s
+    JOIN 
+        payment p ON s.staff_id = p.staff_id
+    GROUP BY 
+        s.first_name, s.last_name, s.staff_id, p.customer_id
+),
+customer_total AS (
+    SELECT 
+        customer_id,
+        SUM(total_revenue) AS customer_total_revenue
+    FROM 
+        staff_revenue
+    GROUP BY 
+        customer_id
+)
+SELECT 
+    sr.first_name,
+    sr.last_name,
+    sr.staff_id,
+    sr.total_revenue,
+    ROUND(sr.total_revenue * 100.0 / ct.customer_total_revenue, 2) AS percentage
+FROM 
+    staff_revenue sr
+JOIN 
+    customer_total ct ON sr.customer_id = ct.customer_id;
+    </pre>
+</body>
+</html>
